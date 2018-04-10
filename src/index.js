@@ -208,20 +208,40 @@ export default class ModalFilterPicker extends Component {
     )
   }
 
+  searchArray = (searchKey, filter) => {
+    console.log("searhArray!");
+    for (let s of searchKey) {
+      r = s.toLowerCase().indexOf(filter);
+      if (0 <= r) {
+        console.log("matched " + s + " on " + filter);
+        return r;
+      }
+    }
+  }
+
   onFilterChange = (text) => {
     const { options } = this.props
 
     const filter = text.toLowerCase()
 
+    console.log("ya here we go 2...");
     // apply filter to incoming data
     const filtered = !filter.length
       ? options
+	  /* LCE 20200917
       : options.filter(
           ({ searchKey, label }) =>
             label.toLowerCase().indexOf(filter) >= 0 ||
             (searchKey && searchKey.toLowerCase().indexOf(filter) >= 0)
         )
+	*/
     /* eslint react/no-unused-state:0 */
+      : options.filter(({ searchKey, label, key }) => (
+        0 <= label.toLowerCase().indexOf(filter) ||
+          (searchKey && Array.isArray(searchKey) && 0 <= this.searchArray(searchKey, filter)) ||
+          (searchKey && !Array.isArray(searchKey) && 0 <= searchKey.toLowerCase().indexOf(filter))
+      ))
+
     this.setState({
       filter: text.toLowerCase(),
       ds: filtered
