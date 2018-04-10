@@ -73,6 +73,11 @@ export default class ModalFilterPicker extends Component {
         >
           <SafeAreaView style={{ flex: 1 }}>
           <View>{renderedTitle}</View>
+	    /* LCE 20200917 this was my branch
+      <Modal {...modal} visible={visible} onRequestClose={this.props.onCancel} supportedOrientations={['portrait', 'landscape']}>
+        <View style={overlayStyle || styles.overlay}>
+          {renderedTitle}
+	  */
           {(renderList || this.renderList)()}
           <View style={cancelContainerStyle || styles.cancelContainer}>
             {(renderCancelButton || this.renderCancelButton)()}
@@ -80,7 +85,7 @@ export default class ModalFilterPicker extends Component {
           </SafeAreaView>
         </KeyboardAvoidingView>
       </Modal>
-    )
+    );
   }
 
   renderList = () => {
@@ -209,11 +214,9 @@ export default class ModalFilterPicker extends Component {
   }
 
   searchArray = (searchKey, filter) => {
-    console.log("searhArray!");
     for (let s of searchKey) {
       r = s.toLowerCase().indexOf(filter);
       if (0 <= r) {
-        console.log("matched " + s + " on " + filter);
         return r;
       }
     }
@@ -223,8 +226,6 @@ export default class ModalFilterPicker extends Component {
     const { options } = this.props
 
     const filter = text.toLowerCase()
-
-    console.log("ya here we go 2...");
     // apply filter to incoming data
     const filtered = !filter.length
       ? options
