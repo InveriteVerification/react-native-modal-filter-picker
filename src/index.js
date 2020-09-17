@@ -73,11 +73,6 @@ export default class ModalFilterPicker extends Component {
         >
           <SafeAreaView style={{ flex: 1 }}>
           <View>{renderedTitle}</View>
-	    /* LCE 20200917 this was my branch
-      <Modal {...modal} visible={visible} onRequestClose={this.props.onCancel} supportedOrientations={['portrait', 'landscape']}>
-        <View style={overlayStyle || styles.overlay}>
-          {renderedTitle}
-	  */
           {(renderList || this.renderList)()}
           <View style={cancelContainerStyle || styles.cancelContainer}>
             {(renderCancelButton || this.renderCancelButton)()}
