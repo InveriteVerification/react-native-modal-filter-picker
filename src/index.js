@@ -18,7 +18,7 @@ import styles from "./styles"
 
 export default class ModalFilterPicker extends Component {
   static keyExtractor(item, index) {
-    return index
+    return index.toString()
   }
 
   constructor(props, ctx) {
@@ -30,7 +30,7 @@ export default class ModalFilterPicker extends Component {
     }
   }
 
-  componentWillReceiveProps(newProps) {
+  UNSAFE_componentWillReceiveProps(newProps) {
     if (
       (!this.props.visible && newProps.visible) ||
       this.props.options !== newProps.options
@@ -177,6 +177,7 @@ export default class ModalFilterPicker extends Component {
     if (renderOption) {
       return renderOption(item, key === selectedOption)
     }
+
     return (
       <TouchableOpacity
         activeOpacity={0.7}
@@ -224,13 +225,6 @@ export default class ModalFilterPicker extends Component {
     // apply filter to incoming data
     const filtered = !filter.length
       ? options
-	  /* LCE 20200917
-      : options.filter(
-          ({ searchKey, label }) =>
-            label.toLowerCase().indexOf(filter) >= 0 ||
-            (searchKey && searchKey.toLowerCase().indexOf(filter) >= 0)
-        )
-	*/
     /* eslint react/no-unused-state:0 */
       : options.filter(({ searchKey, label, key }) => (
         0 <= label.toLowerCase().indexOf(filter) ||
